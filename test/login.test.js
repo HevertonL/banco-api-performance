@@ -3,8 +3,15 @@ import { sleep, check } from 'k6';
 
 export const options = {
 
-  vus: 10,
-  duration: '30s',
+  stages: [ 
+    { duration: '10s', target: 5 },
+    { duration: '10s', target: 10 },
+    { duration: '10s', target: 20 },
+    { duration: '10s', target: 50 },
+    { duration: '5s', target: 20 },
+    { duration: '5s', target: 10 },
+    { duration: '5s', target: 5 },
+  ],
   thresholds: {
     http_req_duration: ['p(90)<3000', 'max<5000'], // 95% das requisições devem ser menores que 500ms
     http_req_failed: ['rate<0.01'],
